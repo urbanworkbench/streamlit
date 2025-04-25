@@ -11,7 +11,8 @@ with st.expander("ℹ️ About this app"):
     
     How it works...
    
-    ### 📘 The Manning's Equation for open channel flow is:
+    ### 📘 Manning's Equation 
+    The Mannings Equation for open channel flow is:
     """)
     
     # Display Manning's equation using LaTeX
