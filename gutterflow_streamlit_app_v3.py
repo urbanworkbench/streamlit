@@ -11,52 +11,53 @@ with st.expander("ℹ️ About this app"):
 
     How it works...
    
-### 📘 The Manning’s Equation for open channel flow is:
+    ### 📘 The Manning’s Equation for open channel flow is:
 
-\[
-Q = \\frac{1}{n} A R^{2/3} S^{1/2}
-\]
+        \[
+        Q = \\frac{1}{n} A R^{2/3} S^{1/2}
+        \]
 
-Where:
+        Where:
 
-- \( Q \) = flow rate (m³/s)  
-- \( n \) = Manning's roughness coefficient  
-- \( A \) = flow area (m²)  
-- \( R \) = hydraulic radius = \( A/P \)  
-- \( P \) = wetted perimeter (m)  
-- \( S \) = slope of the channel
+        - \( Q \) = flow rate (m³/s)  
+        - \( n \) = Manning's roughness coefficient  
+        - \( A \) = flow area (m²)  
+        - \( R \) = hydraulic radius = \( A/P \)  
+        - \( P \) = wetted perimeter (m)  
+        - \( S \) = slope of the channel
 
----
+    ---
 
-### 🔁 Why Iteration Is Needed
+    ### 🔁 Why Iteration Is Needed
 
-If we **know the flow** \( Q \) and want to find **depth** or **top width**:
+    If we **know the flow** \( Q \) and want to find **depth** or **top width**:
 
-- We can't solve the equation algebraically for depth because both **\( A \)** and **\( P \)** depend nonlinearly on the depth or top width.
-- The **hydraulic radius** \( R = A/P \) changes as we change depth.
-- So we must use a **numerical approach** (trial and error or a root finder).
+        - We can't solve the equation algebraically for depth because both **\( A \)** and **\( P \)** depend nonlinearly on the depth or top width.
+        - The **hydraulic radius** \( R = A/P \) changes as we change depth.
+        - So we must use a **numerical approach** (trial and error or a root finder).
 
----
+    ---
 
-### 🌀 Iteration Process
+    ### 🌀 Iteration Process
 
-1. **Guess** a depth or top width.
-2. **Compute**:
-   - \( A \) = flow area
-   - \( P \) = wetted perimeter
-   - \( R = A/P \)
-3. **Calculate** flow \( Q_{calc} \) using Manning’s Equation.
-4. **Compare** \( Q_{calc} \) to your known flow \( Q \).
-5. If close, **done**. If not, **adjust** and try again.
+    1. **Guess** a depth or top width.
+    2. **Compute**:
+       - \( A \) = flow area
+       - \( P \) = wetted perimeter
+       - \( R = A/P \)
+    3. **Calculate** flow \( Q_{calc} \) using Manning’s Equation.
+    4. **Compare** \( Q_{calc} \) to your known flow \( Q \).
+    5. If close, **done**. If not, **adjust** and try again.
 
-This is why your tool uses a numerical solver (`root_scalar`) — it automates this iterative process to find the correct top width for any given flow.
+    This is why the tool uses a numerical solver (`root_scalar`) — it automates this iterative process to find the correct top width for any given flow.
+    
+    Created by [Mike Thomas](https://www.linkedin.com/in/mikethomasca/)
     """)
 
     st.image("iteration_flowchart.png", caption="Iteration process for solving Manning’s Equation", use_column_width=True)
 
 
-    Created by [Mike Thomas](https://www.linkedin.com/in/mikethomasca/)
-    """)
+
 
 st.sidebar.header("Input Parameters")
 
