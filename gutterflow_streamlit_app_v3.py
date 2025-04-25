@@ -8,64 +8,59 @@ st.title("Composite Gutter Flow Calculator")
 with st.expander("ℹ️ About this app"):
     st.markdown("""
     This [Streamlit](https://streamlit.io/) app calculates the width of flow in a composite gutter section for roadside drainage use. This uses Mannings Equation, which is an iterative process, more details below...
-
+    
     How it works...
    
-    ### 📘 The Manning’s Equation for open channel flow is:
-      """)
-
-# Display Manning's equation using LaTeX
-st.latex(r'''
-V = \frac{k}{n} R_h^{2/3} S^{1/2}
-''')
-
-# Display with the full equation and variable definitions
-st.markdown(r'''
-### Manning's Equation
-
-$$V = \frac{k}{n} R_h^{2/3} S^{1/2}$$
-
-Where:
-- $V$ = Mean velocity (m/s or ft/s)
-- $k$ = Conversion constant (1.0 for SI units, 1.49 for US customary units)
-- $n$ = Manning's roughness coefficient
-- $R_h$ = Hydraulic radius (m or ft)
-- $S$ = Channel slope (m/m or ft/ft)
-
-The discharge equation is:
-$$Q = V \times A$$
-
-Where:
-- $Q$ = Discharge (m³/s or ft³/s)
-- $A$ = Cross-sectional area (m² or ft²)
-''')
-
-
- st.markdown("""
- ---
+    ### 📘 The Manning's Equation for open channel flow is:
+    """)
+    
+    # Display Manning's equation using LaTeX
+    st.latex(r'''
+    V = \frac{k}{n} R_h^{2/3} S^{1/2}
+    ''')
+    
+    # Display with the full equation and variable definitions
+    st.markdown(r'''
+    ### Manning's Equation
+    
+    $$V = \frac{k}{n} R_h^{2/3} S^{1/2}$$
+    
+    Where:
+    - $V$ = Mean velocity (m/s or ft/s)
+    - $k$ = Conversion constant (1.0 for SI units, 1.49 for US customary units)
+    - $n$ = Manning's roughness coefficient
+    - $R_h$ = Hydraulic radius (m or ft)
+    - $S$ = Channel slope (m/m or ft/ft)
+    
+    The discharge equation is:
+    $$Q = V \times A$$
+    
+    Where:
+    - $Q$ = Discharge (m³/s or ft³/s)
+    - $A$ = Cross-sectional area (m² or ft²)
+    ''')
+    
+    st.markdown("""
+    ---
     ### 🔁 Why Iteration Is Needed
-
     If we **know the flow** \( Q \) and want to find **depth** or **top width**:
-
     - We can't solve the equation algebraically for depth because both **\( A \)** and **\( P \)** depend nonlinearly on the depth or top width.
     - The **hydraulic radius** \( R = A/P \) changes as we change depth.
     - So we must use a **numerical approach** (trial and error or a root finder).
-
----
-
+    
+    ---
     ### 🌀 Iteration Process
-
     1. **Guess** a depth or top width.
     2. **Compute**:
        - \( A \) = flow area
        - \( P \) = wetted perimeter
        - \( R = A/P \)
-    3. **Calculate** flow \( Q_{calc} \) using Manning’s Equation.
+    3. **Calculate** flow \( Q_{calc} \) using Manning's Equation.
     4. **Compare** \( Q_{calc} \) to your known flow \( Q \).
     5. If close, **done**. If not, **adjust** and try again.
-
+    
     This is why the tool uses a numerical solver (`root_scalar`) — it automates this iterative process to find the correct top width for any given flow.
-
+    
     ### Why It Matters
     - In simple shapes (rectangualr, triangular), the iteration is pretty fast
     - In complex sections (box culverts, irregular gutters), **iteration is essential** because \( A \) and \( P \) vary nonlinerarly with depth. 
@@ -73,8 +68,6 @@ Where:
     
     Created by [Mike Thomas](https://www.linkedin.com/in/mikethomasca/)
     """)
-
-
 
 st.sidebar.header("Input Parameters")
 
