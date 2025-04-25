@@ -13,9 +13,7 @@ with st.expander("ℹ️ About this app"):
    
     ### 📘 The Manning’s Equation for open channel flow is:
 
-    \[
-    Q = \\frac{1}{n} A R^{2/3} S^{1/2}
-    \]
+$$Q = \frac{k}{n} R_h^{2/3} S^{1/2}$$
 
     Where:
 
