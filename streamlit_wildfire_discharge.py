@@ -21,7 +21,7 @@ with st.expander("ℹ️ About this app"):
     - Sensitivity analysis of wildfire effect duration
     - Downloadable simulation results for further analysis
 
-    Created by Mike Thomas
+    Created by [Mike Thomas](https://www.linkedin.com/in/mikethomasca/)
     """)
 
 
