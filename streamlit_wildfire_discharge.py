@@ -22,10 +22,10 @@ with st.expander("ℹ️ About this app"):
 
 
 # Sidebar inputs
-rainfall_intensity = st.sidebar.slider("Rainfall Intensity (mm/hr)", 10, 100, 50, 1, help="Design rainfall intensity in mm/hr")
+rainfall_intensity = st.sidebar.slider("Rainfall Intensity (mm/hr)", 10, 250, 50, 1, help="Design rainfall intensity in mm/hr")
 drainage_area = st.sidebar.slider("Drainage Area (hectares)", 0.5, 1000.0, 100.0, 0.5, help="Catchment area contributing to runoff")
 
-mean_C_baseline = st.sidebar.slider("Mean Runoff Coefficient (Baseline)", 0.1, 0.5, 0.25, 0.01, help="Typical C value for pre-wildfire conditions")
+mean_C_baseline = st.sidebar.slider("Mean Runoff Coefficient (Baseline)", 0.1, 0.8, 0.25, 0.01, help="Typical C value for pre-wildfire conditions")
 std_C_baseline = st.sidebar.slider("Std Dev of Runoff Coefficient (Baseline)", 0.01, 0.2, 0.05, 0.01, help="Variability in C for baseline conditions")
 mean_C_post_wildfire = st.sidebar.slider("Mean Runoff Coefficient (Post-Wildfire)", 0.2, 0.8, 0.40, 0.01, help="Expected C value after wildfire events")
 std_C_post_wildfire = st.sidebar.slider("Std Dev of Runoff Coefficient (Post-Wildfire)", 0.01, 0.3, 0.10, 0.01, help="Variability in C after wildfires")
