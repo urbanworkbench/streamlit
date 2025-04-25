@@ -75,7 +75,7 @@ avg_num_wildfires = np.mean(np.sum(wildfire_occurrences, axis=1))
 
 # Plot histogram
 fig_hist, ax = plt.subplots(figsize=(12, 6))
-ax.hist(Q_avg_lifespan, bins=50, alpha=0.7, label='With Wildfires', colour='brown')
+ax.hist(Q_avg_lifespan, bins=50, alpha=0.7, label='With Wildfires')
 ax.hist(Q_avg_baseline, bins=100, alpha=0.5, label='No Wildfires', color='green')
 
 ax.axvline(np.mean(Q_avg_lifespan), color='red', linestyle='--', label='Mean (Wildfires)')
