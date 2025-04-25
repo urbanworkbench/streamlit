@@ -39,8 +39,10 @@ Where:
 - $Q$ = Discharge (m³/s or ft³/s)
 - $A$ = Cross-sectional area (m² or ft²)
 ''')
-    ---
+
+
  st.markdown("""
+ ---
     ### 🔁 Why Iteration Is Needed
 
     If we **know the flow** \( Q \) and want to find **depth** or **top width**:
@@ -49,7 +51,7 @@ Where:
     - The **hydraulic radius** \( R = A/P \) changes as we change depth.
     - So we must use a **numerical approach** (trial and error or a root finder).
 
-    ---
+---
 
     ### 🌀 Iteration Process
 
