@@ -12,7 +12,7 @@ std_C_baseline = st.sidebar.slider("Std Dev of Runoff Coefficient (Baseline)", 0
 mean_C_post_wildfire = st.sidebar.slider("Mean Runoff Coefficient (Post-Wildfire)", 0.2, 0.8, 0.40, 0.01)
 std_C_post_wildfire = st.sidebar.slider("Std Dev of Runoff Coefficient (Post-Wildfire)", 0.01, 0.3, 0.10, 0.01)
 
-rainfall_intensity = st.sidebar.slider("Rainfall Intensity (mm/hr)", 10, 100, 50, 1)
+rainfall_intensity = st.sidebar.slider("Rainfall Intensity (mm/hr)", 10, 250, 50, 1)
 drainage_area = st.sidebar.slider("Drainage Area (hectares)", 0.5, 100.0, 10.0, 0.5)
 
 prob_wildfire_percent = st.sidebar.slider("Annual Probability of Wildfire (%)", 0.0, 10.0, 1.5, 0.1)
