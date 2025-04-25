@@ -9,9 +9,7 @@ with st.expander("ℹ️ About this app"):
     st.markdown("""
     This [Streamlit](https://streamlit.io/) app calculates the width of flow in a composite gutter section for roadside drainage use. This uses Mannings Equation, which is an iterative process, more details below...
     
-    How it works...
-   
-    ### 📘 Manning's Equation 
+    ### 📘 How it works...
     The Mannings Equation for open channel flow is:
     """)
     
