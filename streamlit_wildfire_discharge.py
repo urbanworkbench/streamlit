@@ -11,6 +11,8 @@ with st.expander("ℹ️ About this app"):
     This [Streamlit](https://streamlit.io/) app simulates the impact of wildfires on runoff and peak discharge over a design lifespan.
     It uses a Monte Carlo approach to account for variability in runoff coefficients before and after wildfires,
     incorporating probabilistic wildfire occurrence and hydrological response.
+
+    There has been research into the effects of wildfires on watersheds, including calibrated modeling such as [PFHydro](https://www.osti.gov/pages/servlets/purl/1580997). This app is intended for demonstration purposes only.
     
     Key features:
     - Adjustable runoff parameters and rainfall intensity
