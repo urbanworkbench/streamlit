@@ -3,34 +3,30 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 
-# --- Time of Concentration Methods (SI) ---
-
+# --- Time of Concentration Methods ---
 def kirpich_tc(length, slope):
     return 0.01947 * (length ** 0.77) * (slope ** -0.385)
 
 def nrcs_sheetflow_tc(length, slope, n, p2):
-    return ((0.007 * n * length) ** 0.8) / ((p2) ** 0.5 * (slope ** 0.4))
+    return ((0.007 * n * length) ** 0.8) / (p2 ** 0.5 * (slope ** 0.4))
 
-def manning_kwa_tc(length, slope, n, intensity):
-    i = intensity / 3600  # mm/h to mm/s
-    return (0.94 * (length ** 0.6) * (n ** 0.6)) / ((i ** 0.4) * (slope ** 0.3))
+def manning_tc(length, slope, n):
+    return (1.44 * (length ** 0.6) * (n ** 0.6)) / (slope ** 0.3)
 
-def bransby_williams_tc(area_km2, slope):
-    area_ha = area_km2 * 100
-    return 58.5 * (area_ha ** 0.1) * (slope ** -0.2)
+def bransby_williams_tc(area, slope):
+    return 58.5 * ((area * 1e6) ** 0.1) * (slope ** -0.2)
 
-def airport_tc(area_km2):
-    area_ha = area_km2 * 100
-    return 0.76 * (area_ha ** 0.5) - 0.5
+def airport_tc(area):
+    return 1.8 * ((area * 1e6) ** 0.5) / 1000 - 0.5
 
 def kerby_hathaway_tc(length, slope, n):
     return 0.946 * (length ** 0.77) * ((slope / n) ** -0.385)
 
-def izzard_tc(length, slope, n):
-    return 0.00013 * (length ** 0.9) * (slope ** -0.6) * (n ** 0.4)
+def izzard_tc(length, slope, n, k=0.00025):
+    return k * (length ** 0.9) * (slope ** -0.6) * (n ** 0.4)
 
-# --- Monte Carlo Simulation ---
-def monte_carlo_analysis(length_range, slope_range, roughness_range, area_range, intensity_range, p2_range, iterations=1000):
+# --- Monte Carlo ---
+def monte_carlo_analysis(length_range, slope_range, roughness_range, area_range, iterations, p2, izzard_k):
     results = {
         'Kirpich': [],
         'NRCS (Sheet Flow)': [],
@@ -42,85 +38,92 @@ def monte_carlo_analysis(length_range, slope_range, roughness_range, area_range,
     }
 
     for _ in range(iterations):
-        length = random.uniform(*length_range)
-        slope = random.uniform(*slope_range)
+        L = random.uniform(*length_range)
+        S = random.uniform(*slope_range)
         n = random.uniform(*roughness_range)
-        area = random.uniform(*area_range)
-        intensity = random.uniform(*intensity_range)
-        p2 = random.uniform(*p2_range)
+        A = random.uniform(*area_range)
 
-        results['Kirpich'].append(kirpich_tc(length, slope))
-        results['NRCS (Sheet Flow)'].append(nrcs_sheetflow_tc(length, slope, n, p2))
-        results['Manning-KWA'].append(manning_kwa_tc(length, slope, n, intensity))
-        results['Bransby-Williams'].append(bransby_williams_tc(area, slope))
-        results['Airport'].append(airport_tc(area))
-        results['Kerby-Hathaway'].append(kerby_hathaway_tc(length, slope, n))
-        results['Izzard'].append(izzard_tc(length, slope, n))
+        results['Kirpich'].append(kirpich_tc(L, S))
+        results['NRCS (Sheet Flow)'].append(nrcs_sheetflow_tc(L, S, n, p2))
+        results['Manning-KWA'].append(manning_tc(L, S, n))
+        results['Bransby-Williams'].append(bransby_williams_tc(A, S))
+        results['Airport'].append(airport_tc(A))
+        results['Kerby-Hathaway'].append(kerby_hathaway_tc(L, S, n))
+        results['Izzard'].append(izzard_tc(L, S, n, izzard_k))
 
     return results
 
 # --- Streamlit UI ---
+st.set_page_config(page_title="Time of Concentration App", layout="wide")
 st.title("🌀 Monte Carlo Time of Concentration (Tc) - SI Units")
 
-with st.expander("ℹ️ Guidance: Choosing a Tc Method by Catchment Type"):
-    st.markdown("""
-### Catchment Type Recommendations
+# Catchment type selection
+catchment_type = st.selectbox("🌎 Select Catchment Type", ["Rural Farmland", "Forested", "Urban"])
 
-| Catchment Type     | Recommended Methods                  | Notes                                                                 |
-|--------------------|--------------------------------------|-----------------------------------------------------------------------|
-| **Rural Farmland** | `Kirpich`, `Bransby-Williams`       | Suitable for large areas with natural, open drainage systems.         |
-| **Forested Areas** | `NRCS (Sheet Flow)` (SCS method)     | Includes effects of vegetation and roughness.                         |
-| **Urban Areas**    | `Manning-KWA`, `NRCS (Sheet Flow)`   | Handles impervious surfaces, variable flow paths, and engineered flow.|
+# Izzard calibration (only for Urban)
+izzard_k = 0.00025
+if catchment_type == "Urban":
+    izzard_k = st.slider("🔧 Izzard calibration constant (k)", 0.0001, 0.0010, 0.00025, step=0.00005)
 
-- ✅ **Kirpich**: Good for small, steep, natural watersheds.
-- ✅ **Bransby-Williams**: Best for large rural catchments.
-- ✅ **NRCS (Sheet Flow)**: Ideal for vegetated and forested terrain.
-- ✅ **Manning-KWA**: Suitable for urban sheet flow over impervious surfaces.
-""")
+st.markdown("---")
 
-catchment_type = st.selectbox(
-    "🌎 Select Catchment Type",
-    options=["Rural Farmland", "Forested", "Urban"]
-)
+# Input ranges
+st.header("📥 Input Ranges for Monte Carlo Simulation")
 
-recommended_methods_map = {
-    "Rural Farmland": ["Kirpich", "Bransby-Williams"],
-    "Forested": ["NRCS (Sheet Flow)"],
-    "Urban": ["Manning-KWA", "NRCS (Sheet Flow)"]
-}
-recommended_methods = recommended_methods_map.get(catchment_type, [])
+length_range = st.slider("Flowpath Length (m)", 10.0, 500.0, (30.0, 100.0))
+slope_range = st.slider("Slope (m/m)", 0.001, 0.1, (0.01, 0.03))
+roughness_range = st.slider("Manning's n", 0.01, 0.2, (0.03, 0.06))
+area_range = st.slider("Catchment Area (km²)", 0.01, 5.0, (0.1, 1.0))
+p2 = st.slider("2-yr Rainfall Depth (mm)", 10, 100, 25)
+iterations = st.slider("Iterations", 100, 5000, 1000, step=100)
 
+# Run simulation
+if st.button("🚀 Run Monte Carlo Simulation"):
+    st.info("Running simulation...")
+    results = monte_carlo_analysis(length_range, slope_range, roughness_range, area_range, iterations, p2, izzard_k)
 
-st.sidebar.header("Input Parameter Ranges")
+    # Logic for method display
+    show_izzard = catchment_type == "Urban"
+    show_nrcs = length_range[1] <= 100
 
-length_range = st.sidebar.slider("Flowpath Length (m)", 1.0, 2000.0, (50.0, 200.0))
-slope_range = st.sidebar.slider("Slope (m/m)", 0.001, 0.2, (0.01, 0.05))
-roughness_range = st.sidebar.slider("Manning’s n", 0.01, 0.2, (0.03, 0.06))
-area_range = st.sidebar.slider("Catchment Area (km²)", 0.01, 10.0, (0.1, 1.0))
-intensity_range = st.sidebar.slider("Rainfall Intensity (mm/h)", 5.0, 100.0, (20.0, 40.0))
-p2_range = st.sidebar.slider("P2 - 2-year 24-hr Rainfall (mm)", 10.0, 150.0, (30.0, 80.0))
-iterations = st.sidebar.slider("Monte Carlo Iterations", 100, 5000, 1000)
+    excluded = []
+    if not show_izzard: excluded.append("Izzard (Urban only)")
+    if not show_nrcs: excluded.append("NRCS Sheet Flow (flowpath > 100m)")
 
-if st.button("Run Simulation"):
-    with st.spinner("Running Monte Carlo Simulation..."):
-        results = monte_carlo_analysis(
-            length_range, slope_range, roughness_range,
-            area_range, intensity_range, p2_range, iterations
-        )
+    if excluded:
+        st.warning("⚠️ Methods not shown: " + ", ".join(excluded))
 
-    st.success("Simulation complete!")
+    # Recommended methods guidance
+    recommended_map = {
+        "Rural Farmland": ["Kirpich", "Bransby-Williams"],
+        "Forested": ["NRCS (Sheet Flow)"],
+        "Urban": ["Manning-KWA", "NRCS (Sheet Flow)"]
+    }
+    recommended = recommended_map.get(catchment_type, [])
 
+    # Filter results
+    filtered_results = {}
     for method, values in results.items():
+        if method == "Izzard" and not show_izzard:
+            continue
+        if method == "NRCS (Sheet Flow)" and not show_nrcs:
+            continue
+        filtered_results[method] = values
+
+    # Show results
+    st.markdown("---")
+    st.header("📊 Simulation Results")
+
+    for method, values in filtered_results.items():
         arr = np.array(values)
-        st.subheader(f"{'⭐ ' if method in recommended_methods else ''}{method}")
+        st.subheader(f"{'⭐ ' if method in recommended else ''}{method}")
         st.write(f"**Mean:** {np.mean(arr):.2f} min")
         st.write(f"**Std Dev:** {np.std(arr):.2f} min")
         st.write(f"**Min:** {np.min(arr):.2f} | Max: {np.max(arr):.2f}")
 
         fig, ax = plt.subplots()
-        ax.hist(arr, bins=30, color='skyblue' if method not in recommended_methods else 'orange', edgecolor='black')
+        ax.hist(arr, bins=30, color='orange' if method in recommended else 'skyblue', edgecolor='black')
         ax.set_title(f"{method} Distribution")
         ax.set_xlabel("Time of Concentration (min)")
         ax.set_ylabel("Frequency")
         st.pyplot(fig)
-
