@@ -22,7 +22,7 @@ def airport_tc(area):
 def kerby_hathaway_tc(length, slope, n):
     return 0.946 * (length ** 0.77) * ((slope / n) ** -0.385)
 
-def izzard_tc(length, slope, n, k=0.00025):
+def izzard_tc(length, slope, n, k):
     return k * (length ** 0.9) * (slope ** -0.6) * (n ** 0.4)
 
 # --- Monte Carlo ---
@@ -55,20 +55,20 @@ def monte_carlo_analysis(length_range, slope_range, roughness_range, area_range,
 
 # --- Streamlit UI ---
 st.set_page_config(page_title="Time of Concentration App", layout="wide")
-st.title("🌀 Monte Carlo Time of Concentration (Tc) - SI Units")
+st.title("\U0001F300 Monte Carlo Time of Concentration (Tc) - SI Units")
 
 # Catchment type selection
-catchment_type = st.selectbox("🌎 Select Catchment Type", ["Rural Farmland", "Forested", "Urban"])
+catchment_type = st.selectbox("\U0001F30E Select Catchment Type", ["Rural Farmland", "Forested", "Urban"])
 
 # Izzard calibration (only for Urban)
 izzard_k = 0.00025
 if catchment_type == "Urban":
-    izzard_k = st.slider("🔧 Izzard calibration constant (k)", 0.0001, 0.0010, 0.00025, step=0.00005)
+    izzard_k = st.slider("\U0001F527 Izzard calibration constant (k)", 0.0001, 0.0010, 0.00025, step=0.00005)
 
 st.markdown("---")
 
 # Input ranges
-st.header("📥 Input Ranges for Monte Carlo Simulation")
+st.header("\U0001F4E5 Input Ranges for Monte Carlo Simulation")
 
 length_range = st.slider("Flowpath Length (m)", 10.0, 500.0, (30.0, 100.0))
 slope_range = st.slider("Slope (m/m)", 0.001, 0.1, (0.01, 0.03))
@@ -78,7 +78,7 @@ p2 = st.slider("2-yr Rainfall Depth (mm)", 10, 100, 25)
 iterations = st.slider("Iterations", 100, 5000, 1000, step=100)
 
 # Run simulation
-if st.button("🚀 Run Monte Carlo Simulation"):
+if st.button("\U0001F680 Run Monte Carlo Simulation"):
     st.info("Running simulation...")
     results = monte_carlo_analysis(length_range, slope_range, roughness_range, area_range, iterations, p2, izzard_k)
 
@@ -91,7 +91,7 @@ if st.button("🚀 Run Monte Carlo Simulation"):
     if not show_nrcs: excluded.append("NRCS Sheet Flow (flowpath > 100m)")
 
     if excluded:
-        st.warning("⚠️ Methods not shown: " + ", ".join(excluded))
+        st.warning("\u26A0\uFE0F Methods not shown: " + ", ".join(excluded))
 
     # Recommended methods guidance
     recommended_map = {
@@ -112,11 +112,11 @@ if st.button("🚀 Run Monte Carlo Simulation"):
 
     # Show results
     st.markdown("---")
-    st.header("📊 Simulation Results")
+    st.header("\U0001F4CA Simulation Results")
 
     for method, values in filtered_results.items():
         arr = np.array(values)
-        st.subheader(f"{'⭐ ' if method in recommended else ''}{method}")
+        st.subheader(f"{'\u2B50 ' if method in recommended else ''}{method}")
         st.write(f"**Mean:** {np.mean(arr):.2f} min")
         st.write(f"**Std Dev:** {np.std(arr):.2f} min")
         st.write(f"**Min:** {np.min(arr):.2f} | Max: {np.max(arr):.2f}")
