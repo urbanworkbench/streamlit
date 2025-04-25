@@ -12,7 +12,7 @@ with st.expander("ℹ️ About this app"):
     It uses a Monte Carlo approach to account for variability in runoff coefficients before and after wildfires,
     incorporating probabilistic wildfire occurrence and hydrological response.
 
-    There has been research into the effects of wildfires on watersheds, including calibrated modeling such as [PFHydro](https://www.osti.gov/pages/servlets/purl/1580997). This app is intended for demonstration purposes only.
+    There has been research into the effects of wildfires on watersheds, including calibrated modeling such as [PFHydro](https://www.osti.gov/pages/servlets/purl/1580997) and HEC-HMS models incorporating [wildfire impacts on snowmelt](https://www.hec.usace.army.mil/confluence/hmsdocs/hmsguides/modeling-snowmelt/modeling-runoff-in-post-wildfire-snowmelt-basins). This app is intended for demonstration purposes only.
     
     Key features:
     - Adjustable runoff parameters and rainfall intensity
