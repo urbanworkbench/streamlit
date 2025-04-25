@@ -8,7 +8,7 @@ st.title("Monte Carlo Simulation of Peak Discharge with Wildfire Effects")
 
 with st.expander("ℹ️ About this app"):
     st.markdown("""
-    This st.page_link("https://streamlit.io/", label="Streamlit", icon="🌎") app simulates the impact of wildfires on runoff and peak discharge over a design lifespan.
+    This [Streamlit](https://streamlit.io/) app simulates the impact of wildfires on runoff and peak discharge over a design lifespan.
     It uses a Monte Carlo approach to account for variability in runoff coefficients before and after wildfires,
     incorporating probabilistic wildfire occurrence and hydrological response.
     
@@ -19,6 +19,7 @@ with st.expander("ℹ️ About this app"):
     - Sensitivity analysis of wildfire effect duration
     - Downloadable simulation results for further analysis
     """)
+
 
 # Sidebar inputs
 mean_C_baseline = st.sidebar.slider("Mean Runoff Coefficient (Baseline)", 0.1, 0.5, 0.25, 0.01, help="Typical C value for pre-wildfire conditions")
