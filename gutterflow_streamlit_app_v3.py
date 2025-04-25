@@ -56,8 +56,8 @@ with st.expander("ℹ️ About this app"):
     5. If close, **done**. If not, **adjust** and try again.
     
     This is why the tool uses a numerical solver (`root_scalar`) — it automates this iterative process to find the correct top width for any given flow.
-    
-    ### Why It Matters
+    ---
+    ### 💭 Why It Matters
     - In simple shapes (rectangualr, triangular), the iteration is pretty fast
     - In complex sections (box culverts, irregular gutters), **iteration is essential** because \( A \) and \( P \) vary nonlinerarly with depth. 
     - No closed-form solution for \( h \) or \( T \) -> **must use numerical methods**.
