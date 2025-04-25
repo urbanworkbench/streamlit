@@ -62,6 +62,35 @@ def monte_carlo_analysis(length_range, slope_range, roughness_range, area_range,
 # --- Streamlit UI ---
 st.title("🌀 Monte Carlo Time of Concentration (Tc) - SI Units")
 
+with st.expander("ℹ️ Guidance: Choosing a Tc Method by Catchment Type"):
+    st.markdown("""
+### Catchment Type Recommendations
+
+| Catchment Type     | Recommended Methods                  | Notes                                                                 |
+|--------------------|--------------------------------------|-----------------------------------------------------------------------|
+| **Rural Farmland** | `Kirpich`, `Bransby-Williams`       | Suitable for large areas with natural, open drainage systems.         |
+| **Forested Areas** | `NRCS (Sheet Flow)` (SCS method)     | Includes effects of vegetation and roughness.                         |
+| **Urban Areas**    | `Manning-KWA`, `NRCS (Sheet Flow)`   | Handles impervious surfaces, variable flow paths, and engineered flow.|
+
+- ✅ **Kirpich**: Good for small, steep, natural watersheds.
+- ✅ **Bransby-Williams**: Best for large rural catchments.
+- ✅ **NRCS (Sheet Flow)**: Ideal for vegetated and forested terrain.
+- ✅ **Manning-KWA**: Suitable for urban sheet flow over impervious surfaces.
+""")
+
+catchment_type = st.selectbox(
+    "🌎 Select Catchment Type",
+    options=["Rural Farmland", "Forested", "Urban"]
+)
+
+recommended_methods_map = {
+    "Rural Farmland": ["Kirpich", "Bransby-Williams"],
+    "Forested": ["NRCS (Sheet Flow)"],
+    "Urban": ["Manning-KWA", "NRCS (Sheet Flow)"]
+}
+recommended_methods = recommended_methods_map.get(catchment_type, [])
+
+
 st.sidebar.header("Input Parameter Ranges")
 
 length_range = st.sidebar.slider("Flowpath Length (m)", 1.0, 2000.0, (50.0, 200.0))
@@ -83,14 +112,15 @@ if st.button("Run Simulation"):
 
     for method, values in results.items():
         arr = np.array(values)
-        st.subheader(f"{method}")
+        st.subheader(f"{'⭐ ' if method in recommended_methods else ''}{method}")
         st.write(f"**Mean:** {np.mean(arr):.2f} min")
         st.write(f"**Std Dev:** {np.std(arr):.2f} min")
         st.write(f"**Min:** {np.min(arr):.2f} | Max: {np.max(arr):.2f}")
 
         fig, ax = plt.subplots()
-        ax.hist(arr, bins=30, color='skyblue', edgecolor='black')
+        ax.hist(arr, bins=30, color='skyblue' if method not in recommended_methods else 'orange', edgecolor='black')
         ax.set_title(f"{method} Distribution")
         ax.set_xlabel("Time of Concentration (min)")
         ax.set_ylabel("Frequency")
         st.pyplot(fig)
+
