@@ -13,7 +13,7 @@ mean_C_post_wildfire = st.sidebar.slider("Mean Runoff Coefficient (Post-Wildfire
 std_C_post_wildfire = st.sidebar.slider("Std Dev of Runoff Coefficient (Post-Wildfire)", 0.01, 0.3, 0.10, 0.01)
 
 rainfall_intensity = st.sidebar.slider("Rainfall Intensity (mm/hr)", 10, 100, 50, 1)
-drainage_area = st.sidebar.slider("Drainage Area (hectares)", 10, 1000, 100, 10)
+drainage_area = st.sidebar.slider("Drainage Area (hectares)", 0.5, 100, 10, 0.5)
 
 prob_wildfire_percent = st.sidebar.slider("Annual Probability of Wildfire (%)", 0.0, 10.0, 1.5, 0.1)
 prob_wildfire_annual = prob_wildfire_percent / 100
