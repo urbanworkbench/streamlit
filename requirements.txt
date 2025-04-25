@@ -3,3 +3,6 @@ numpy
 matplotlib
 scipy
 random
+pandas
+folium
+streamlit-folium
