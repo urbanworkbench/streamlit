@@ -21,10 +21,6 @@ with st.expander("ℹ️ About this app"):
     
     # Display with the full equation and variable definitions
     st.markdown(r'''
-    ### Manning's Equation
-    
-    $$V = \frac{k}{n} R_h^{2/3} S^{1/2}$$
-    
     Where:
     - $V$ = Mean velocity (m/s or ft/s)
     - $k$ = Conversion constant (1.0 for SI units, 1.49 for US customary units)
