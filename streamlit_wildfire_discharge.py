@@ -6,6 +6,20 @@ from io import BytesIO
 
 st.title("Monte Carlo Simulation of Peak Discharge with Wildfire Effects")
 
+with st.expander("ℹ️ About this app"):
+    st.markdown("""
+    This st.page_link("https://streamlit.io/", label="Streamlit", icon="🌎") app simulates the impact of wildfires on runoff and peak discharge over a design lifespan.
+    It uses a Monte Carlo approach to account for variability in runoff coefficients before and after wildfires,
+    incorporating probabilistic wildfire occurrence and hydrological response.
+    
+    Key features:
+    - Adjustable runoff parameters and rainfall intensity
+    - Control over wildfire probability, fire effect duration, and design life
+    - Histogram comparison of peak discharge with and without wildfires
+    - Sensitivity analysis of wildfire effect duration
+    - Downloadable simulation results for further analysis
+    """)
+
 # Sidebar inputs
 mean_C_baseline = st.sidebar.slider("Mean Runoff Coefficient (Baseline)", 0.1, 0.5, 0.25, 0.01, help="Typical C value for pre-wildfire conditions")
 std_C_baseline = st.sidebar.slider("Std Dev of Runoff Coefficient (Baseline)", 0.01, 0.2, 0.05, 0.01, help="Variability in C for baseline conditions")
@@ -134,4 +148,3 @@ export_df = pd.DataFrame({
 })
 csv_data = export_df.to_csv(index=False)
 st.download_button("Download Results as CSV", data=csv_data, file_name="wildfire_discharge_simulation.csv", mime="text/csv")
-
