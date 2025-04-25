@@ -54,9 +54,6 @@ with st.expander("ℹ️ About this app"):
     Created by [Mike Thomas](https://www.linkedin.com/in/mikethomasca/)
     """)
 
-    st.image("iteration_flowchart.png", caption="Iteration process for solving Manning’s Equation", use_column_width=True)
-
-
 
 
 st.sidebar.header("Input Parameters")
