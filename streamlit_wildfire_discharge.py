@@ -7,19 +7,19 @@ from io import BytesIO
 st.title("Monte Carlo Simulation of Peak Discharge with Wildfire Effects")
 
 # Sidebar inputs
-mean_C_baseline = st.sidebar.slider("Mean Runoff Coefficient (Baseline)", 0.1, 0.5, 0.25, 0.01)
-std_C_baseline = st.sidebar.slider("Std Dev of Runoff Coefficient (Baseline)", 0.01, 0.2, 0.05, 0.01)
-mean_C_post_wildfire = st.sidebar.slider("Mean Runoff Coefficient (Post-Wildfire)", 0.2, 0.8, 0.40, 0.01)
-std_C_post_wildfire = st.sidebar.slider("Std Dev of Runoff Coefficient (Post-Wildfire)", 0.01, 0.3, 0.10, 0.01)
+mean_C_baseline = st.sidebar.slider("Mean Runoff Coefficient (Baseline)", 0.1, 0.5, 0.25, 0.01, help="Typical C value for pre-wildfire conditions")
+std_C_baseline = st.sidebar.slider("Std Dev of Runoff Coefficient (Baseline)", 0.01, 0.2, 0.05, 0.01, help="Variability in C for baseline conditions")
+mean_C_post_wildfire = st.sidebar.slider("Mean Runoff Coefficient (Post-Wildfire)", 0.2, 0.8, 0.40, 0.01, help="Expected C value after wildfire events")
+std_C_post_wildfire = st.sidebar.slider("Std Dev of Runoff Coefficient (Post-Wildfire)", 0.01, 0.3, 0.10, 0.01, help="Variability in C after wildfires")
 
-rainfall_intensity = st.sidebar.slider("Rainfall Intensity (mm/hr)", 10, 250, 50, 1)
-drainage_area = st.sidebar.slider("Drainage Area (hectares)", 0.5, 100.0, 10.0, 0.5)
+rainfall_intensity = st.sidebar.slider("Rainfall Intensity (mm/hr)", 10, 100, 50, 1, help="Design rainfall intensity in mm/hr")
+drainage_area = st.sidebar.slider("Drainage Area (hectares)", 0.5, 1000.0, 100.0, 0.5, help="Catchment area contributing to runoff")
 
-prob_wildfire_percent = st.sidebar.slider("Annual Probability of Wildfire (%)", 0.0, 10.0, 1.5, 0.1)
+prob_wildfire_percent = st.sidebar.slider("Annual Probability of Wildfire (%)", 0.0, 10.0, 1.5, 0.1, help="Annual chance of a wildfire occurring in a given year")
 prob_wildfire_annual = prob_wildfire_percent / 100
 
-design_lifespan_years = st.sidebar.slider("Design Lifespan (years)", 10, 200, 70, 5)
-fire_effect_duration = st.sidebar.slider("Fire Effect Duration (years)", 1, 50, 15, 1)
+design_lifespan_years = st.sidebar.slider("Design Lifespan (years)", 10, 200, 70, 5, help="Number of years for the simulation/design life")
+fire_effect_duration = st.sidebar.slider("Fire Effect Duration (years)", 1, 50, 15, 1, help="Number of years wildfire effects persist on runoff")
 
 num_simulations = 10000
 
@@ -134,3 +134,4 @@ export_df = pd.DataFrame({
 })
 csv_data = export_df.to_csv(index=False)
 st.download_button("Download Results as CSV", data=csv_data, file_name="wildfire_discharge_simulation.csv", mime="text/csv")
+
