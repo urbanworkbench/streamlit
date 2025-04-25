@@ -12,20 +12,35 @@ with st.expander("ℹ️ About this app"):
     How it works...
    
     ### 📘 The Manning’s Equation for open channel flow is:
+      """)
 
-$$Q = \frac{k}{n} R_h^{2/3} S^{1/2}$$
+# Display Manning's equation using LaTeX
+st.latex(r'''
+V = \frac{k}{n} R_h^{2/3} S^{1/2}
+''')
 
-    Where:
+# Display with the full equation and variable definitions
+st.markdown(r'''
+### Manning's Equation
 
-    - \( Q \) = flow rate (m³/s)  
-    - \( n \) = Manning's roughness coefficient  
-    - \( A \) = flow area (m²)  
-    - \( R \) = hydraulic radius = \( A/P \)  
-    - \( P \) = wetted perimeter (m)  
-    - \( S \) = slope of the channel
+$$V = \frac{k}{n} R_h^{2/3} S^{1/2}$$
 
+Where:
+- $V$ = Mean velocity (m/s or ft/s)
+- $k$ = Conversion constant (1.0 for SI units, 1.49 for US customary units)
+- $n$ = Manning's roughness coefficient
+- $R_h$ = Hydraulic radius (m or ft)
+- $S$ = Channel slope (m/m or ft/ft)
+
+The discharge equation is:
+$$Q = V \times A$$
+
+Where:
+- $Q$ = Discharge (m³/s or ft³/s)
+- $A$ = Cross-sectional area (m² or ft²)
+''')
     ---
-
+ st.markdown("""
     ### 🔁 Why Iteration Is Needed
 
     If we **know the flow** \( Q \) and want to find **depth** or **top width**:
