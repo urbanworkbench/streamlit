@@ -7,11 +7,11 @@ st.title("Composite Gutter Flow Calculator")
 
 with st.expander("ℹ️ About this app"):
     st.markdown("""
-    This [Streamlit](https://streamlit.io/) app calculates the width of flow in a composite gutter section for roadside drainage use. 
+    This [Streamlit](https://streamlit.io/) app calculates the width of flow in a composite gutter section for roadside drainage use. This uses Mannings Equation, which is an iterative process, more details below...
 
     How it works...
    
-### 📘 Manning’s Equation for open channel flow is:
+### 📘 The Manning’s Equation for open channel flow is:
 
 \[
 Q = \\frac{1}{n} A R^{2/3} S^{1/2}
