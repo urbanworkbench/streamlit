@@ -54,8 +54,8 @@ with st.expander("ℹ️ About this app"):
     3. **Calculate** flow \( Q_{calc} \) using Manning's Equation.
     4. **Compare** \( Q_{calc} \) to your known flow \( Q \).
     5. If close, **done**. If not, **adjust** and try again.
-    
     This is why the tool uses a numerical solver (`root_scalar`) — it automates this iterative process to find the correct top width for any given flow.
+    
     ---
     ### 💭 Why It Matters
     - In simple shapes (rectangualr, triangular), the iteration is pretty fast
