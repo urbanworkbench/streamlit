@@ -17,14 +17,14 @@ with st.expander("ℹ️ About this app"):
     Q = \\frac{1}{n} A R^{2/3} S^{1/2}
     \]
 
-        Where:
+    Where:
 
-        - \( Q \) = flow rate (m³/s)  
-        - \( n \) = Manning's roughness coefficient  
-        - \( A \) = flow area (m²)  
-        - \( R \) = hydraulic radius = \( A/P \)  
-        - \( P \) = wetted perimeter (m)  
-        - \( S \) = slope of the channel
+    - \( Q \) = flow rate (m³/s)  
+    - \( n \) = Manning's roughness coefficient  
+    - \( A \) = flow area (m²)  
+    - \( R \) = hydraulic radius = \( A/P \)  
+    - \( P \) = wetted perimeter (m)  
+    - \( S \) = slope of the channel
 
     ---
 
@@ -32,9 +32,9 @@ with st.expander("ℹ️ About this app"):
 
     If we **know the flow** \( Q \) and want to find **depth** or **top width**:
 
-        - We can't solve the equation algebraically for depth because both **\( A \)** and **\( P \)** depend nonlinearly on the depth or top width.
-        - The **hydraulic radius** \( R = A/P \) changes as we change depth.
-        - So we must use a **numerical approach** (trial and error or a root finder).
+    - We can't solve the equation algebraically for depth because both **\( A \)** and **\( P \)** depend nonlinearly on the depth or top width.
+    - The **hydraulic radius** \( R = A/P \) changes as we change depth.
+    - So we must use a **numerical approach** (trial and error or a root finder).
 
     ---
 
@@ -50,6 +50,11 @@ with st.expander("ℹ️ About this app"):
     5. If close, **done**. If not, **adjust** and try again.
 
     This is why the tool uses a numerical solver (`root_scalar`) — it automates this iterative process to find the correct top width for any given flow.
+
+    ### Why It Matters
+    - In simple shapes (rectangualr, triangular), the iteration is pretty fast
+    - In complex sections (box culverts, irregular gutters), **iteration is essential** because \( A \) and \( P \) vary nonlinerarly with depth. 
+    - No closed-form solution for \( h \) or \( T \) -> **must use numerical methods**.
     
     Created by [Mike Thomas](https://www.linkedin.com/in/mikethomasca/)
     """)
