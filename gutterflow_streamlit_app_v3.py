@@ -61,7 +61,9 @@ with st.expander("ℹ️ About this app"):
     - In complex sections (box culverts, irregular gutters), **iteration is essential** because \( A \) and \( P \) vary nonlinerarly with depth. 
     - No closed-form solution for \( h \) or \( T \) -> **must use numerical methods**.
     
-    Created by [Mike Thomas](https://www.linkedin.com/in/mikethomasca/)
+    Created by [Mike Thomas](https://www.linkedin.com/in/mikethomasca/).
+    
+    The calculations and results provided by this app are for informational purposes only. While I strived to ensure accuracy, I make no guarantees regarding the completeness, reliability, or suitability of the information. Users should verify the results independently and consult with a professional if necessary. By using this app, you agree that the developer is not liable for any errors, omissions, or any losses or damages arising from the use of this app.
     """)
 
 st.sidebar.header("Input Parameters")
